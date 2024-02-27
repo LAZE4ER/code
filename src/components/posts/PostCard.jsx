@@ -42,7 +42,7 @@ function PostCard({
   createdAt,
 }) {
   const [isLikeLoading, setIsLikeLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const user = useSelector(selectUser);
 
   function handleLikeClick() {
@@ -56,6 +56,7 @@ function PostCard({
   }
 
   function handleDeleteClick() {
+    setIsDeleteLoading(true);
     deletePostService(id).then(() => {
       onDelete(id);
     });
@@ -88,17 +89,14 @@ function PostCard({
                 colorScheme="gray"
                 aria-label="See menu"
                 icon={<BsThreeDotsVertical />}
+                isLoading={isDeleteLoading}
               />
 
               <MenuList>
                 <MenuItem as={Link} to={`/posts/${id}/edit`}>
                   Edit
                 </MenuItem>
-                <MenuItem
-                  color="red.400"
-                  onClick={handleDeleteClick}
-                  isLoading={true}
-                >
+                <MenuItem color="red.400" onClick={handleDeleteClick}>
                   Delete
                 </MenuItem>
               </MenuList>
